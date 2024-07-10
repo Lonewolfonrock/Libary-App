@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="916eed5a-8651-4a70-bf01-1c492bbd539e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App Layer/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/App Layer/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App Layer/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/App Layer/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book/src/main/java/com/app/book/book/controller/bookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/java/com/app/book/book/controller/bookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book/src/main/java/com/app/book/book/model/books.java" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/java/com/app/book/book/model/books.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book/src/main/java/com/app/book/book/repo/bookRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/java/com/app/book/book/repo/bookRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book/src/main/java/com/app/book/book/service/bookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/java/com/app/book/book/service/bookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="916eed5a-8651-4a70-bf01-1c492bbd539e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,18 +16,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Lonewolfonrock"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Lonewolfonrock&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Lonewolfonrock/Libary-App.git",
-    "accountId": "01ef6b5e-9c0f-49de-81fe-94c9883f6fde"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Lonewolfonrock/Libary-App.git&quot;,
+    &quot;accountId&quot;: &quot;01ef6b5e-9c0f-49de-81fe-94c9883f6fde&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -45,19 +36,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Libary App"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Libary App&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
