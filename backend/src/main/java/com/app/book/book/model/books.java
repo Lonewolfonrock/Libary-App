@@ -21,6 +21,7 @@ public class books {
     private String bookName;
     private String bookDescription;
     private String bookAuthor;
-    private String bookImageUrl;
+    private String smallThumbnail;
+    private String bigThumbnail;
 
 }
