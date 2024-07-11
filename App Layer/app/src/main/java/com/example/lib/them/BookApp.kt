@@ -15,13 +15,14 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.lib.screen.HomeScreen
 import com.example.lib.screen.booksViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun bookApp(){
+fun bookApp(navController: NavController){
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
@@ -32,7 +33,6 @@ fun bookApp(){
     ){
         val bookViewModel:booksViewModel = viewModel(factory = booksViewModel.Factory)
         Column(modifier = Modifier.padding(top = 100.dp)) {
-            println("step1")
             HomeScreen(bookUiState = bookViewModel.bookUiState,
                 retryAction = bookViewModel::getBookData,
                 contentPadding = it
