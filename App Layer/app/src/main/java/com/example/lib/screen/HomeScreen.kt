@@ -2,6 +2,7 @@ package com.example.lib.screen
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -73,7 +74,10 @@ fun BookData(
 
         items(items = data, key = {it.bookID}){
             book -> BookCard(
-            data = book, modifier = Modifier.padding(4.dp)
+            data = book,
+            modifier = Modifier.padding(4.dp)
+                .clickable {}
+
             )
 
         }
@@ -81,23 +85,28 @@ fun BookData(
     }
 }
 @Composable
-fun BookCard(data: bookData, modifier: Modifier) {
+fun BookCard(
+    data: bookData,
+    modifier: Modifier,
+) {
     Card(
         modifier = modifier
             .padding(10.dp)
-            .widthIn(max = 200.dp)
-            .heightIn(max = 270.dp),
+            .widthIn(min = 200.dp, max = 300.dp)
+            .heightIn(max = 250.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-        shape = MaterialTheme.shapes.medium
+        shape = MaterialTheme.shapes.medium,
+
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = data.bookName,
-                modifier = Modifier.padding(10.dp),
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                modifier = Modifier.padding(10.dp)
+                    .align(Alignment.CenterHorizontally)
+                ,
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
             AsyncImage(
                 model = ImageRequest.Builder(context = LocalContext.current)
@@ -111,6 +120,13 @@ fun BookCard(data: bookData, modifier: Modifier) {
             )
         }
     }
+}
+
+@Composable
+fun BookDetails(){
+
+
+
 }
 
 
