@@ -6,9 +6,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +26,13 @@ import com.example.lib.R
 import com.example.lib.network.bookData
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
 
 @Composable
@@ -51,24 +64,53 @@ fun BookData(
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ){
 
-    LazyColumn(
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
         contentPadding = contentPadding,
         modifier = Modifier.padding(5.dp)
     ) {
 
         items(items = data, key = {it.bookID}){
-            book -> BookCard(data = book, modifier = Modifier)
+            book -> BookCard(
+            data = book, modifier = Modifier.padding(4.dp)
+            )
 
         }
 
-
     }
 }
-
 @Composable
 fun BookCard(data: bookData, modifier: Modifier) {
-    Log.d("BookCard", "Displaying book with ID: ${data.bookID}, Name: ${data.bookName}")
-    Text(text = "Book Id: ${data.bookID}")
+    Card(
+        modifier = modifier
+            .padding(10.dp)
+            .widthIn(max = 200.dp)
+            .heightIn(max = 270.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = data.bookName,
+                modifier = Modifier.padding(10.dp),
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+            )
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data(data.bigThumbnail)
+                    .build(),
+                contentDescription = "Image of book ${data.bookName}",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .size(200.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
+    }
 }
 
 
