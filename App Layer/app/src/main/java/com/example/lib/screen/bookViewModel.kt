@@ -32,9 +32,11 @@ class booksViewModel(private val bookRepo: BookRepo): ViewModel() {
             bookUiState = try {
                 BookUiState.Success(bookRepo.getBookdata())
             } catch (e: IOException) {
+                println("Error is $e")
                 BookUiState.Error
             } catch (e: HttpException) {
-                BookUiState.Loading
+
+                BookUiState.Error
             }
         }
 

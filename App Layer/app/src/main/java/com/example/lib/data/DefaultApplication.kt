@@ -10,9 +10,9 @@ interface AppContainer{
 }
 
 class DefaultAppContainer:AppContainer{
-    private val Base_URL ="http://localhost:8080/api/"
+    private val Base_URL ="http://192.168.1.67:3000/api/"
     private val retrofit:Retrofit = Retrofit.Builder().baseUrl(Base_URL)
-        .addConverterFactory(GsonConverterFactory.create()).baseUrl(Base_URL).build()
+        .addConverterFactory(GsonConverterFactory.create()).build()
 
     private val retrofitService: booksApiService by lazy {
         retrofit.create(booksApiService::class.java)

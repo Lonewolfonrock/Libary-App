@@ -32,6 +32,7 @@ fun bookApp(){
     ){
         val bookViewModel:booksViewModel = viewModel(factory = booksViewModel.Factory)
         Column(modifier = Modifier.padding(top = 100.dp)) {
+            println("step1")
             HomeScreen(bookUiState = bookViewModel.bookUiState,
                 retryAction = bookViewModel::getBookData,
                 contentPadding = it

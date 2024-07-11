@@ -1,9 +1,11 @@
 package com.example.lib.network
 
 data class bookData (
-    var bookId: Int,
+    var bookID: Int,
     var bookName: String,
     var bookDescription: String,
     var bookAuthor: String,
-    var bookImageUrl: String
+    var smallThumbnail: String,
+    var bigThumbnail: String
+
 )
