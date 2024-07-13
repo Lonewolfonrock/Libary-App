@@ -35,7 +35,7 @@ fun bookApp(navController: NavHostController){
         }
     ){paddingValues ->
         val bookViewModel:booksViewModel = viewModel(factory = booksViewModel.Factory)
-        Column(modifier = Modifier.padding(top = 100.dp)) {
+        Column(modifier = Modifier.padding(top = 20.dp)) {
             NavHost(navController = navController, startDestination = "home") {
                 composable("home"){
                     HomeScreen(
@@ -45,9 +45,10 @@ fun bookApp(navController: NavHostController){
                         navController = navController
                     )
                 }
-                composable("bookDetails/{bookName}"){navBackStackEntry ->
-                    val bookname = navBackStackEntry.arguments?.getString("bookName") ?: ""
-                    BookDetails(bookName = bookname)
+                composable("bookDetails/{bookID}"){navBackStackEntry ->
+                    val bookID = navBackStackEntry.arguments?.getString("bookID")?.toIntOrNull() ?: 0
+                    val booksViewModel: booksViewModel = viewModel(factory = booksViewModel.Factory)
+                    BookDetails(bookID = bookID, booksViewModel = booksViewModel)
                 }
             }
         }

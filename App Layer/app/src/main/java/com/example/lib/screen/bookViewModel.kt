@@ -3,6 +3,8 @@ package com.example.lib.screen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -21,6 +23,8 @@ class booksViewModel(private val bookRepo: BookRepo): ViewModel() {
 
     var bookUiState: BookUiState by mutableStateOf(BookUiState.Loading)
         private set
+    val _bookData = MutableLiveData<bookData?>()
+    val bookData: LiveData<bookData?> = _bookData
 
     init {
         getBookData()
@@ -34,12 +38,31 @@ class booksViewModel(private val bookRepo: BookRepo): ViewModel() {
             } catch (e: IOException) {
                 BookUiState.Error
             } catch (e: HttpException) {
-
                 BookUiState.Error
             }
         }
 
     }
+    fun featchBookByID(bookID:Int){
+        viewModelScope.launch {
+            try {
+                val book = bookRepo.getBookByID(bookID)
+                _bookData.value = book
+            }
+            catch (e:IOException){
+                BookUiState.Error
+            }
+            catch (e:HttpException){
+                BookUiState.Error
+            }
+
+
+
+        }
+
+    }
+
+
 
     companion object {
 

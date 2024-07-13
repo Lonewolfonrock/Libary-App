@@ -43,10 +43,12 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ){
+
+
     when(bookUiState){
         is BookUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
         is BookUiState.Success -> BookData(data = bookUiState.Data,modifier=modifier,contentPadding = contentPadding,navigateToDetails = {
-            book -> navController.navigate("bookDetails/${book.bookName}")
+            book -> navController.navigate("bookDetails/${book.bookID}")
 
         })
         else -> ErrorScreen(
@@ -62,9 +64,7 @@ fun HomeScreen(
 @Composable
 fun BookData(
     data: List<bookData>,
-    modifier: Modifier = Modifier
-        .padding(0.dp)
-        .fillMaxSize(),
+    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     navigateToDetails: (bookData) -> Unit
 ){
@@ -123,17 +123,6 @@ fun BookCard(
         }
     }
 }
-
-@Composable
-fun BookDetails(bookName: String){
-    Text(
-        text = "Book Details for $bookName",
-        modifier = Modifier.size(100.dp)
-    )
-
-}
-
-
 
 @Composable
 fun LoadingScreen(modifier: Modifier){
