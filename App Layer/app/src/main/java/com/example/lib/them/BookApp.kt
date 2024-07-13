@@ -15,14 +15,17 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.lib.screen.BookDetails
 import com.example.lib.screen.HomeScreen
 import com.example.lib.screen.booksViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun bookApp(navController: NavController){
+fun bookApp(navController: NavHostController){
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
@@ -30,17 +33,24 @@ fun bookApp(navController: NavController){
         topBar = {
             BookAppBar(scrollBehavior = scrollBehavior)
         }
-    ){
+    ){paddingValues ->
         val bookViewModel:booksViewModel = viewModel(factory = booksViewModel.Factory)
         Column(modifier = Modifier.padding(top = 100.dp)) {
-            HomeScreen(bookUiState = bookViewModel.bookUiState,
-                retryAction = bookViewModel::getBookData,
-                contentPadding = it
-                )
-
+            NavHost(navController = navController, startDestination = "home") {
+                composable("home"){
+                    HomeScreen(
+                        bookUiState = bookViewModel.bookUiState,
+                        retryAction = { bookViewModel::getBookData },
+                        contentPadding = paddingValues,
+                        navController = navController
+                    )
+                }
+                composable("bookDetails/{bookName}"){navBackStackEntry ->
+                    val bookname = navBackStackEntry.arguments?.getString("bookName") ?: ""
+                    BookDetails(bookName = bookname)
+                }
+            }
         }
-
-
     }
         }
 
@@ -53,7 +63,6 @@ fun BookAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Mod
             Text(
                 text = "Book App",
                 style = MaterialTheme.typography.headlineSmall,
-
             )
         },
         modifier = modifier

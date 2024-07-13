@@ -1,18 +1,16 @@
 package com.example.lib.screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -25,19 +23,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.lib.R
 import com.example.lib.network.bookData
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 
 @Composable
 fun HomeScreen(
+    navController: NavController,
     bookUiState: BookUiState,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
@@ -45,7 +45,10 @@ fun HomeScreen(
 ){
     when(bookUiState){
         is BookUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        is BookUiState.Success -> BookData(bookUiState.Data,modifier)
+        is BookUiState.Success -> BookData(data = bookUiState.Data,modifier=modifier,contentPadding = contentPadding,navigateToDetails = {
+            book -> navController.navigate("bookDetails/${book.bookName}")
+
+        })
         else -> ErrorScreen(
             retryAction,
             modifier = modifier
@@ -62,38 +65,36 @@ fun BookData(
     modifier: Modifier = Modifier
         .padding(0.dp)
         .fillMaxSize(),
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    navigateToDetails: (bookData) -> Unit
 ){
-
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = contentPadding,
         modifier = Modifier.padding(5.dp)
     ) {
-
         items(items = data, key = {it.bookID}){
             book -> BookCard(
             data = book,
-            modifier = Modifier.padding(4.dp)
-                .clickable {}
-
+            modifier = Modifier.padding(4.dp),
+                navigateToDetails = navigateToDetails
             )
-
         }
-
     }
 }
 @Composable
 fun BookCard(
     data: bookData,
     modifier: Modifier,
+    navigateToDetails: (bookData) -> Unit
 ) {
     Card(
         modifier = modifier
             .padding(10.dp)
             .widthIn(min = 200.dp, max = 300.dp)
-            .heightIn(max = 250.dp),
+            .heightIn(max = 250.dp)
+            .clickable { navigateToDetails(data) }
+        ,
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
         shape = MaterialTheme.shapes.medium,
 
@@ -103,7 +104,8 @@ fun BookCard(
         ) {
             Text(
                 text = data.bookName,
-                modifier = Modifier.padding(10.dp)
+                modifier = Modifier
+                    .padding(10.dp)
                     .align(Alignment.CenterHorizontally)
                 ,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
@@ -123,9 +125,11 @@ fun BookCard(
 }
 
 @Composable
-fun BookDetails(){
-
-
+fun BookDetails(bookName: String){
+    Text(
+        text = "Book Details for $bookName",
+        modifier = Modifier.size(100.dp)
+    )
 
 }
 
