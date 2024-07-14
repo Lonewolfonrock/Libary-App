@@ -135,26 +135,28 @@ fun LoadingScreen(modifier: Modifier){
 }
 
 @Composable
-fun ErrorScreen(retryAction:()-> Unit, modifier: Modifier=Modifier){
+fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
     Column(
-        modifier=modifier,
+        modifier = modifier
+            .fillMaxSize(),
+
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Image(painter = painterResource(R.drawable.ic_connection_error),
-                contentDescription ="Error",
-                modifier = modifier.size(200.dp)
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_connection_error),
+            contentDescription = "Error",
+            modifier = Modifier.size(200.dp)
         )
         Text(
-            text = "Failed to load",
-            modifier=Modifier.padding(16.dp)
+            text = "Failed to load Data",
+            modifier = Modifier.padding(16.dp)
         )
-        Button(onClick = retryAction) {
+        Button(
+            onClick = retryAction,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
             Text(text = "Retry")
         }
-
-
-
     }
-
 }

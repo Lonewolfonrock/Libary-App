@@ -55,14 +55,9 @@ class booksViewModel(private val bookRepo: BookRepo): ViewModel() {
             catch (e:HttpException){
                 BookUiState.Error
             }
-
-
-
         }
 
     }
-
-
 
     companion object {
 

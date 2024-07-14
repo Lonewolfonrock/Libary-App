@@ -40,7 +40,7 @@ fun bookApp(navController: NavHostController){
                 composable("home"){
                     HomeScreen(
                         bookUiState = bookViewModel.bookUiState,
-                        retryAction = { bookViewModel::getBookData },
+                        retryAction = { bookViewModel.getBookData() },
                         contentPadding = paddingValues,
                         navController = navController
                     )

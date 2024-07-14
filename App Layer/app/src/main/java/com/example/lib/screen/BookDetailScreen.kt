@@ -34,7 +34,7 @@ fun BookDetails(bookID: Int, booksViewModel: booksViewModel) {
 
     Column(
         modifier = Modifier
-            .padding(top = 130.dp)
+            .padding(top = 70.dp)
             .fillMaxSize()
     ) {
         Row {
@@ -47,7 +47,7 @@ fun BookDetails(bookID: Int, booksViewModel: booksViewModel) {
             ) {
 
 
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(30.dp))
 
                 Text(
                     text ="#${bookData?.bookID} on Trending",
