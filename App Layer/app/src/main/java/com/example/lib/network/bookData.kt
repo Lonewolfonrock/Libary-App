@@ -6,6 +6,7 @@ data class bookData (
     var bookDescription: String,
     var bookAuthor: String,
     var smallThumbnail: String,
-    var bigThumbnail: String
+    var bigThumbnail: String,
+    var catagory: String
 
 )

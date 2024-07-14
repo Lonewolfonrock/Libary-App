@@ -23,5 +23,6 @@ public class books {
     private String bookAuthor;
     private String smallThumbnail;
     private String bigThumbnail;
+    private String catagory;
 
 }
