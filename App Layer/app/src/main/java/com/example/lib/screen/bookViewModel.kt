@@ -1,5 +1,6 @@
 package com.example.lib.screen
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -36,8 +37,10 @@ class booksViewModel(private val bookRepo: BookRepo): ViewModel() {
             bookUiState = try {
                 BookUiState.Success(bookRepo.getBookdata())
             } catch (e: IOException) {
+                Log.e("booksViewModel", "IOException: ${e.message}")
                 BookUiState.Error
             } catch (e: HttpException) {
+                Log.e("booksViewModel", "HttpException: ${e.message}")
                 BookUiState.Error
             }
         }

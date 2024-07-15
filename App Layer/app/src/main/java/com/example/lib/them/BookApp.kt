@@ -2,6 +2,7 @@ package com.example.lib.them
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.lib.screen.BookDetails
 import com.example.lib.screen.HomeScreen
+import com.example.lib.screen.SimpleTextField
 import com.example.lib.screen.booksViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -31,7 +33,11 @@ fun bookApp(navController: NavHostController){
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            BookAppBar(scrollBehavior = scrollBehavior)
+            Column {
+                BookAppBar(scrollBehavior = scrollBehavior)
+                SimpleTextField()
+            }
+
         }
     ){paddingValues ->
         val bookViewModel:booksViewModel = viewModel(factory = booksViewModel.Factory)

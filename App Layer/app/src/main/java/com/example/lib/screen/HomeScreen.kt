@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,13 +27,31 @@ import com.example.lib.network.bookData
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+
+@Composable
+fun SimpleTextField() {
+    var text by remember { mutableStateOf(TextFieldValue("")) }
+    TextField(
+        value = text,
+        onValueChange = { newText ->
+            text = newText
+        }
+    )
+}
 
 
 @Composable
@@ -45,21 +64,27 @@ fun HomeScreen(
 ){
 
 
-    when(bookUiState){
-        is BookUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        is BookUiState.Success -> BookData(data = bookUiState.Data,modifier=modifier,contentPadding = contentPadding,navigateToDetails = {
-            book -> navController.navigate("bookDetails/${book.bookID}")
+        when (bookUiState) {
+            is BookUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
+            is BookUiState.Success -> BookData(
+                data = bookUiState.Data,
+                modifier = modifier,
+                contentPadding = contentPadding,
+                navigateToDetails = { book ->
+                    navController.navigate("bookDetails/${book.bookID}")
 
-        })
-        else -> ErrorScreen(
-            retryAction,
-            modifier = modifier
-                .padding(contentPadding)
-                .fillMaxSize()
-        )
+                })
+
+            else -> ErrorScreen(
+                retryAction,
+                modifier = modifier
+                    .padding(contentPadding)
+                    .fillMaxSize()
+            )
+        }
     }
 
-}
+
 
 @Composable
 fun BookData(
@@ -68,20 +93,24 @@ fun BookData(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     navigateToDetails: (bookData) -> Unit
 ){
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = contentPadding,
-        modifier = Modifier.padding(5.dp)
-    ) {
-        items(items = data, key = {it.bookID}){
-            book -> BookCard(
-            data = book,
-            modifier = Modifier.padding(4.dp),
-                navigateToDetails = navigateToDetails
-            )
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            contentPadding = contentPadding,
+            modifier = Modifier.padding(5.dp)
+        ) {
+            items(items = data, key = { it.bookID }) { book ->
+                BookCard(
+                    data = book,
+                    modifier = Modifier.padding(4.dp),
+                    navigateToDetails = navigateToDetails
+                )
+            }
         }
+
     }
-}
+
+
 @Composable
 fun BookCard(
     data: bookData,
