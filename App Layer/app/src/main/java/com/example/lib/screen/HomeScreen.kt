@@ -1,12 +1,15 @@
 package com.example.lib.screen
 
+import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -15,6 +18,8 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +31,7 @@ import com.example.lib.R
 import com.example.lib.network.bookData
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextField
@@ -43,15 +49,27 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 @Composable
-fun SimpleTextField() {
+fun OutLineTextField() {
     var text by remember { mutableStateOf(TextFieldValue("")) }
-    TextField(
+    OutlinedTextField(
         value = text,
-        onValueChange = { newText ->
-            text = newText
+        label = { Text(text = "Enter Your Book") },
+        onValueChange = {
+            text = it
         }
     )
 }
+
+@Composable
+fun Button(){
+    Button(onClick = {}){
+     Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+
+    }
+
+
+}
+
 
 
 @Composable
@@ -93,10 +111,21 @@ fun BookData(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     navigateToDetails: (bookData) -> Unit
 ){
+    Column(modifier = modifier.padding(contentPadding)){
+        Row(
+            modifier = Modifier
+                .fillMaxWidth() ,
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutLineTextField()
+            Button()
+        }
+
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            contentPadding = contentPadding,
+            contentPadding = PaddingValues(0.dp),
             modifier = Modifier.padding(5.dp)
         ) {
             items(items = data, key = { it.bookID }) { book ->
@@ -107,6 +136,7 @@ fun BookData(
                 )
             }
         }
+    }
 
     }
 

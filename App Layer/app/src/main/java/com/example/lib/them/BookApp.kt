@@ -21,7 +21,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.lib.screen.BookDetails
 import com.example.lib.screen.HomeScreen
-import com.example.lib.screen.SimpleTextField
 import com.example.lib.screen.booksViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -33,10 +32,9 @@ fun bookApp(navController: NavHostController){
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            Column {
+
                 BookAppBar(scrollBehavior = scrollBehavior)
-                SimpleTextField()
-            }
+
 
         }
     ){paddingValues ->

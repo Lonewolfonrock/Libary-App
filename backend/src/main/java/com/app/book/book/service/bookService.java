@@ -28,6 +28,10 @@ public class bookService{
         return bookRepo.save(books);
     }
 
+    public List<books> findAllByBookNameStartingWith(String bookName) {
+       return  bookRepo.findAllByBooksName(bookName);
+    }
+
 
 
 
