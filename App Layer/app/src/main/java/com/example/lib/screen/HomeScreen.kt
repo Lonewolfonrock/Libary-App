@@ -1,5 +1,7 @@
 package com.example.lib.screen
 
+import BookUiState
+import BooksViewModel
 import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -56,7 +58,7 @@ fun HomeScreen(
     navController: NavController,
     bookUiState: BookUiState,
     retryAction: () -> Unit,
-    viewModel: booksViewModel,
+    viewModel: BooksViewModel,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {
@@ -66,6 +68,7 @@ fun HomeScreen(
                 data = bookUiState.Data,
                 modifier = modifier,
                 contentPadding = contentPadding,
+                booksViewModel = viewModel,
                 navigateToDetails = { book ->
                     navController.navigate("bookDetails/${book.bookID}")
                 }
@@ -89,10 +92,13 @@ fun BookData(
     data: List<bookData>,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    navigateToDetails: (bookData) -> Unit
+    navigateToDetails: (bookData) -> Unit,
+    booksViewModel: BooksViewModel
 ){
     Column(modifier = modifier.padding(contentPadding)){
-        SearchBarWithButton()
+        SearchBarWithButton(
+            booksViewModel = booksViewModel
+        )
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(0.dp),

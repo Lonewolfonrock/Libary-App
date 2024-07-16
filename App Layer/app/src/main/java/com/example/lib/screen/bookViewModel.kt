@@ -1,5 +1,3 @@
-package com.example.lib.screen
-
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,87 +17,76 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
+class BooksViewModel(private val bookRepo: BookRepo) : ViewModel() {
 
-class booksViewModel(private val bookRepo: BookRepo): ViewModel() {
-
-    var bookUiState: BookUiState by mutableStateOf(BookUiState.Loading)
+    var bookUiState by mutableStateOf<BookUiState>(BookUiState.Loading)
         private set
-    val _bookData = MutableLiveData<bookData?>()
+
+    private val _bookData = MutableLiveData<bookData?>()
     val bookData: LiveData<bookData?> = _bookData
 
     init {
         getBookData()
     }
 
-
     fun getBookData() {
         viewModelScope.launch {
             bookUiState = try {
                 BookUiState.Success(bookRepo.getBookdata())
             } catch (e: IOException) {
-                Log.e("booksViewModel", "IOException: ${e.message}")
+                Log.e("BooksViewModel", "IOException: ${e.message}")
                 BookUiState.Error
             } catch (e: HttpException) {
-                Log.e("booksViewModel", "HttpException: ${e.message}")
+                Log.e("BooksViewModel", "HttpException: ${e.message}")
                 BookUiState.Error
             }
         }
     }
 
-    fun featchBookByID(bookID:Int){
+    fun fetchBookByID(bookID: Int) {
         viewModelScope.launch {
             try {
                 val book = bookRepo.getBookByID(bookID)
                 _bookData.value = book
-            }
-            catch (e:IOException){
-                BookUiState.Error
-            }
-            catch (e:HttpException){
-                BookUiState.Error
-            }
-        }
-
-    }
-
-    fun searchBooks(bookName: String){
-        viewModelScope.launch {
-            bookUiState = try {
-                BookUiState.Success(bookRepo.searchBooks(bookName))
-            }
-            catch (e:IOException){
+            } catch (e: IOException) {
                 Log.e("BooksViewModel", "IOException: ${e.message}")
                 BookUiState.Error
-            }
-            catch (e:HttpException){
+            } catch (e: HttpException) {
                 Log.e("BooksViewModel", "HttpException: ${e.message}")
                 BookUiState.Error
             }
-
         }
-
     }
 
+    fun searchBooks(bookName: String) {
+        viewModelScope.launch {
+            bookUiState = try {
+                BookUiState.Success(bookRepo.searchBooks(bookName))
+            } catch (e: IOException) {
+                Log.e("BooksViewModel", "IOException: ${e.message}")
+                BookUiState.Error
+            } catch (e: HttpException) {
+                Log.e("BooksViewModel", "HttpException: ${e.message}")
+                BookUiState.Error
+            }
+        }
+    }
 
     companion object {
-
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = this[APPLICATION_KEY] as? BookDataApplication
-                    ?: throw IllegalStateException("Expected BookData Application")
+                    ?: throw IllegalStateException("Expected BookDataApplication")
 
                 val bookRepo = application.container.bookDataRepo
-                booksViewModel(bookRepo = bookRepo)
+                BooksViewModel(bookRepo)
             }
-
         }
-
     }
 }
 
-    sealed interface BookUiState {
-        data class Success(val Data: List<bookData>) : BookUiState
-        object Error : BookUiState
-        object Loading : BookUiState
-    }
-
+sealed interface BookUiState {
+    data class Success(val Data: List<bookData>) : BookUiState
+    object Error : BookUiState
+    object Loading : BookUiState
+}

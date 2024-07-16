@@ -1,5 +1,6 @@
 package com.example.lib.screen
 
+import BooksViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,11 +24,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 @Composable
-fun BookDetails(bookID: Int, booksViewModel: booksViewModel) {
+fun BookDetails(bookID: Int, booksViewModel: BooksViewModel) {
 
     val bookData by booksViewModel.bookData.observeAsState()
     LaunchedEffect(bookID) {
-        booksViewModel.featchBookByID(bookID)
+        booksViewModel.fetchBookByID(bookID)
     }
 
     Column(

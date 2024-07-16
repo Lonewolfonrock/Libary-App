@@ -1,5 +1,6 @@
 package com.example.lib.them
 
+import BooksViewModel
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +22,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.lib.screen.BookDetails
 import com.example.lib.screen.HomeScreen
-import com.example.lib.screen.booksViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -29,7 +29,7 @@ import com.example.lib.screen.booksViewModel
 fun bookApp(navController: NavHostController){
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val bookViewModel: booksViewModel = viewModel(factory = booksViewModel.Factory)
+    val bookViewModel: BooksViewModel = viewModel(factory = BooksViewModel.Factory)
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -40,7 +40,7 @@ fun bookApp(navController: NavHostController){
 
         }
     ){paddingValues ->
-        val bookViewModel:booksViewModel = viewModel(factory = booksViewModel.Factory)
+        val bookViewModel:BooksViewModel = viewModel(factory = BooksViewModel.Factory)
         Column(modifier = Modifier.padding(top = 20.dp)) {
             NavHost(navController = navController, startDestination = "home") {
                 composable("home"){
@@ -55,7 +55,7 @@ fun bookApp(navController: NavHostController){
                 }
                 composable("bookDetails/{bookID}"){navBackStackEntry ->
                     val bookID = navBackStackEntry.arguments?.getString("bookID")?.toIntOrNull() ?: 0
-                    val booksViewModel: booksViewModel = viewModel(factory = booksViewModel.Factory)
+                    val booksViewModel: BooksViewModel = viewModel(factory = BooksViewModel.Factory)
                     BookDetails(bookID = bookID, booksViewModel = booksViewModel)
                 }
             }

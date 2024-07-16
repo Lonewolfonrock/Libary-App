@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface bookRepo extends JpaRepository<books,Integer>{
 
-    @Query("SELECT b FROM books b WHERE b.bookName LIKE %:bookName%")
+    @Query("SELECT b FROM books b WHERE b.bookName LIKE :bookName%")
     List<books> findAllByBooksName(@Param("bookName") String bookName);
 
 }

@@ -1,5 +1,6 @@
 package com.example.lib.utils
 
+import BooksViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,9 +45,10 @@ fun SearchIconButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun SearchBarWithButton() {
+fun SearchBarWithButton(
+    booksViewModel: BooksViewModel
+) {
     var text by remember { mutableStateOf("") }
-
     Row(
         modifier = Modifier
             .padding(16.dp),
@@ -59,8 +61,9 @@ fun SearchBarWithButton() {
         )
         Spacer(modifier = Modifier.height(8.dp))
         SearchIconButton(onClick = {
-            // Handle search icon click with the current text value
-            println("Search clicked with text: $text")
+            booksViewModel.searchBooks(text)
+
+
         })
     }
 }
