@@ -43,33 +43,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-
-@Composable
-fun OutLineTextField() {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
-    OutlinedTextField(
-        value = text,
-        label = { Text(text = "Enter Your Book") },
-        onValueChange = {
-            text = it
-        }
-    )
-}
-
-@Composable
-fun Button(){
-    Button(onClick = {}){
-     Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
-
-    }
-
-
-}
-
+import com.example.lib.utils.SearchBarWithButton
 
 
 @Composable
@@ -77,11 +56,10 @@ fun HomeScreen(
     navController: NavController,
     bookUiState: BookUiState,
     retryAction: () -> Unit,
+    viewModel: booksViewModel,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
-){
-
-
+) {
         when (bookUiState) {
             is BookUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
             is BookUiState.Success -> BookData(
@@ -90,9 +68,8 @@ fun HomeScreen(
                 contentPadding = contentPadding,
                 navigateToDetails = { book ->
                     navController.navigate("bookDetails/${book.bookID}")
-
-                })
-
+                }
+            )
             else -> ErrorScreen(
                 retryAction,
                 modifier = modifier
@@ -100,7 +77,10 @@ fun HomeScreen(
                     .fillMaxSize()
             )
         }
-    }
+
+}
+
+
 
 
 
@@ -112,17 +92,7 @@ fun BookData(
     navigateToDetails: (bookData) -> Unit
 ){
     Column(modifier = modifier.padding(contentPadding)){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth() ,
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            OutLineTextField()
-            Button()
-        }
-
-
+        SearchBarWithButton()
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(0.dp),

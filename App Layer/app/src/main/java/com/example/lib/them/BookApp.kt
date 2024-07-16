@@ -29,6 +29,8 @@ import com.example.lib.screen.booksViewModel
 fun bookApp(navController: NavHostController){
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val bookViewModel: booksViewModel = viewModel(factory = booksViewModel.Factory)
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -46,7 +48,9 @@ fun bookApp(navController: NavHostController){
                         bookUiState = bookViewModel.bookUiState,
                         retryAction = { bookViewModel.getBookData() },
                         contentPadding = paddingValues,
-                        navController = navController
+                        navController = navController,
+                        viewModel = bookViewModel
+
                     )
                 }
                 composable("bookDetails/{bookID}"){navBackStackEntry ->

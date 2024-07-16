@@ -37,7 +37,7 @@ public class bookController {
         }
     }
 
-    @GetMapping("/bookname/{bookName}")
+    @GetMapping("/books/search/{bookName}")
     public ResponseEntity<List<books>> getBooksByName(@PathVariable String bookName) {
         return new ResponseEntity<>(bookService.findAllByBookNameStartingWith(bookName),HttpStatus.OK);
     }

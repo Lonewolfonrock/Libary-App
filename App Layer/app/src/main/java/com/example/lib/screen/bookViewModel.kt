@@ -44,8 +44,8 @@ class booksViewModel(private val bookRepo: BookRepo): ViewModel() {
                 BookUiState.Error
             }
         }
-
     }
+
     fun featchBookByID(bookID:Int){
         viewModelScope.launch {
             try {
@@ -61,6 +61,25 @@ class booksViewModel(private val bookRepo: BookRepo): ViewModel() {
         }
 
     }
+
+    fun searchBooks(bookName: String){
+        viewModelScope.launch {
+            bookUiState = try {
+                BookUiState.Success(bookRepo.searchBooks(bookName))
+            }
+            catch (e:IOException){
+                Log.e("BooksViewModel", "IOException: ${e.message}")
+                BookUiState.Error
+            }
+            catch (e:HttpException){
+                Log.e("BooksViewModel", "HttpException: ${e.message}")
+                BookUiState.Error
+            }
+
+        }
+
+    }
+
 
     companion object {
 
