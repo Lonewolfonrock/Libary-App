@@ -97,7 +97,7 @@ fun BookData(
 ){
     Column(modifier = modifier.padding(contentPadding)){
         SearchBarWithButton(
-            booksViewModel = booksViewModel
+            booksViewModel = booksViewModel,
         )
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),

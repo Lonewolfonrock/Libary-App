@@ -2,9 +2,14 @@ package com.example.lib.them
 
 import BooksViewModel
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -13,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -22,6 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.lib.screen.BookDetails
 import com.example.lib.screen.HomeScreen
+import com.example.lib.utils.BackButton
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -34,10 +41,7 @@ fun bookApp(navController: NavHostController){
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-
-                BookAppBar(scrollBehavior = scrollBehavior)
-
-
+                        BookAppBar(scrollBehavior = scrollBehavior)
         }
     ){paddingValues ->
         val bookViewModel:BooksViewModel = viewModel(factory = BooksViewModel.Factory)
@@ -67,13 +71,24 @@ fun bookApp(navController: NavHostController){
 @OptIn(ExperimentalMaterial3Api::class)
 fun BookAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier ){
     CenterAlignedTopAppBar(
+
         scrollBehavior = scrollBehavior,
         title = {
-            Text(
-                text = "Book App",
-                style = MaterialTheme.typography.headlineSmall,
-            )
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.align(Alignment.CenterStart),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    BackButton(onClick = { /* Handle back button click */ })
+                }
+                Text(
+                    text = "Book App",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         },
+        
         modifier = modifier
     )
 }

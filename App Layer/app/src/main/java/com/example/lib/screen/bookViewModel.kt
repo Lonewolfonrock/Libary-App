@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.lib.data.BookRepo
 import com.example.lib.network.bookData
 import com.example.lib.them.BookDataApplication
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -60,6 +61,8 @@ class BooksViewModel(private val bookRepo: BookRepo) : ViewModel() {
 
     fun searchBooks(bookName: String) {
         viewModelScope.launch {
+            bookUiState = BookUiState.Loading
+            delay(1000)
             bookUiState = try {
                 BookUiState.Success(bookRepo.searchBooks(bookName))
             } catch (e: IOException) {
