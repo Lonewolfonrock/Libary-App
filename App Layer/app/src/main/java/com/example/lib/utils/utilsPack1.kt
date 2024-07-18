@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
 fun OutLineTextFieldSample(text:String, onTextChange: (String) -> Unit)  {
@@ -67,6 +68,8 @@ fun BackButton(onClick:() -> Unit){
 @Composable
 fun SearchBarWithButton(
     booksViewModel: BooksViewModel,
+    navController: NavController
+
 ) {
     var text by remember { mutableStateOf("") }
     Row(
@@ -82,7 +85,7 @@ fun SearchBarWithButton(
         Spacer(modifier = Modifier.height(8.dp))
         SearchIconButton(onClick = {
             booksViewModel.searchBooks(text)
-
+            navController.navigate("searchScreen/${text}")
 
         })
     }
