@@ -84,9 +84,12 @@ fun SearchBarWithButton(
         )
         Spacer(modifier = Modifier.height(8.dp))
         SearchIconButton(onClick = {
+            booksViewModel.resetBookUiState()
             booksViewModel.searchBooks(text)
             navController.navigate("searchScreen/${text}")
 
         })
     }
 }
+
+

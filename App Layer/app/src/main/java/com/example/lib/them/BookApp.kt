@@ -3,7 +3,6 @@ package com.example.lib.them
 import BooksViewModel
 import android.annotation.SuppressLint
 import android.app.Activity
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -72,15 +71,11 @@ fun bookApp(navController: NavHostController){
                         booksViewModel = booksViewModel,
                         navController = navController
                     )
-
                 }
-
-
-
             }
         }
     }
-        }
+}
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

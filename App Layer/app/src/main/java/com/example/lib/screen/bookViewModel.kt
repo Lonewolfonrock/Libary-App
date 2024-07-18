@@ -75,6 +75,12 @@ class BooksViewModel(private val bookRepo: BookRepo) : ViewModel() {
         }
     }
 
+    fun resetBookUiState(){
+        bookUiState = BookUiState.Loading
+
+    }
+
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

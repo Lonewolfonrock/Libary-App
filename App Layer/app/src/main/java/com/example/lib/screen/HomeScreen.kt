@@ -27,6 +27,7 @@ import com.example.lib.network.bookData
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +46,11 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues()
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.resetBookUiState()
+        retryAction()
+    }
+
         when (bookUiState) {
             is BookUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
             is BookUiState.Success -> BookData(
@@ -66,10 +72,6 @@ fun HomeScreen(
         }
 
 }
-
-
-
-
 
 @Composable
 fun BookData(

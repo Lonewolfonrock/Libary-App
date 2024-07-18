@@ -43,9 +43,5 @@ fun SearchScreen(
 
         else -> {}
     }
-
-
-
-
 }
 
