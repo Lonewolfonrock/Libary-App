@@ -1,8 +1,6 @@
 package com.app.book.book.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,11 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="user_table")
-
+@Table(name="user_details")
 public class user implements UserDetails {
 
     @Id
+    @Column(updatable = false, nullable = false)
     private String id;
     private String name;
     private String email;
@@ -34,7 +32,7 @@ public class user implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override

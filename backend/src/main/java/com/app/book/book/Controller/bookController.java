@@ -23,7 +23,7 @@ public class bookController {
     public  ResponseEntity<List<books>> gellAll(){
         return new ResponseEntity<>(bookService.getAllBook(),HttpStatus.OK);
     }
-    @GetMapping("/book/{id}")
+    @GetMapping("/books/{id}")
     public ResponseEntity<books> getByID(@PathVariable int id){
 
         books bookD = bookService.getBookbyId(id);
@@ -44,7 +44,7 @@ public class bookController {
 
     
 
-    @PostMapping("/add")
+    @PostMapping("/books/add")
     public ResponseEntity<books> addBooks(@RequestBody books books) {
         try {
             books books1 = bookService.addBook(books);

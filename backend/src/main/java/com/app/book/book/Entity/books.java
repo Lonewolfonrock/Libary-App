@@ -16,6 +16,7 @@ public class books {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookID;
     private String bookName;
+    @Column(length = 5000)
     private String bookDescription;
     private String bookAuthor;
     private String smallThumbnail;

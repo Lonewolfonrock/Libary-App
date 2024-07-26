@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface bookRepo extends JpaRepository<books,Integer>{
 
     @Query("SELECT b FROM books b WHERE b.bookName LIKE :bookName%")
