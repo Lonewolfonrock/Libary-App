@@ -1,20 +1,23 @@
+
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import retrofit2.Response
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.lib.data.BookRepo
+import com.example.lib.network.LoginResponse
 import com.example.lib.network.bookData
 import com.example.lib.them.BookDataApplication
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -24,6 +27,11 @@ class BooksViewModel(private val bookRepo: BookRepo) : ViewModel() {
         private set
 
     private val _bookData = MutableLiveData<bookData?>()
+
+    private val _loginResponse = MutableLiveData<LoginResponse?>()
+    val loginResponse: LiveData<LoginResponse?> get() = _loginResponse
+
+
     val bookData: LiveData<bookData?> = _bookData
 
     init {
@@ -72,6 +80,17 @@ class BooksViewModel(private val bookRepo: BookRepo) : ViewModel() {
                 Log.e("BooksViewModel", "HttpException: ${e.message}")
                 BookUiState.Error
             }
+        }
+    }
+    fun login(username: String,password: String){
+        viewModelScope.launch {
+            val response: Response<LoginResponse> = bookRepo.login(username,password)
+            if (response.isSuccessful) {
+                _loginResponse.value = response.body()
+            } else {
+                _loginResponse.value = LoginResponse(sucess = false, token = "")
+            }
+
         }
     }
 
