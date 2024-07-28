@@ -27,6 +27,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.lib.screen.BookDetails
 import com.example.lib.screen.HomeScreen
+import com.example.lib.screen.LoadingScreen
+import com.example.lib.screen.LoginSignUpScreen
 import com.example.lib.screen.SearchScreen
 import com.example.lib.utils.BackButton
 
@@ -46,7 +48,17 @@ fun bookApp(navController: NavHostController){
     ){paddingValues ->
         val bookViewModel:BooksViewModel = viewModel(factory = BooksViewModel.Factory)
         Column(modifier = Modifier.padding(top = 20.dp)) {
-            NavHost(navController = navController, startDestination = "home") {
+            NavHost(navController = navController, startDestination = "login") {
+
+                composable("login"){
+                    LoginSignUpScreen(
+                        navController = navController,
+                        booksViewModel = bookViewModel
+                    )
+
+                }
+
+
                 composable("home"){
                     HomeScreen(
                         bookUiState = bookViewModel.bookUiState,
@@ -57,6 +69,8 @@ fun bookApp(navController: NavHostController){
 
                     )
                 }
+
+
                 composable("bookDetails/{bookID}"){navBackStackEntry ->
                     val bookID = navBackStackEntry.arguments?.getString("bookID")?.toIntOrNull() ?: 0
                     val booksViewModel: BooksViewModel = viewModel(factory = BooksViewModel.Factory)

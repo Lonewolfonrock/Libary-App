@@ -73,6 +73,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-compose:2.7.7")
     implementation(libs.androidx.runtime.livedata)
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation(libs.androidx.media3.common)
 
 
 

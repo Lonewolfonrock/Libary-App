@@ -13,26 +13,31 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.lib.auth.JwtResponse
+import com.example.lib.data.AuthRepo
 import com.example.lib.data.BookRepo
-import com.example.lib.network.LoginResponse
-import com.example.lib.network.bookData
+import com.example.lib.network.BookData
 import com.example.lib.them.BookDataApplication
 import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import java.io.IOException
 
-class BooksViewModel(private val bookRepo: BookRepo) : ViewModel() {
+class BooksViewModel(
+    private val bookRepo: BookRepo,
+    private val authRepo: AuthRepo
+
+) : ViewModel() {
 
     var bookUiState by mutableStateOf<BookUiState>(BookUiState.Loading)
         private set
 
-    private val _bookData = MutableLiveData<bookData?>()
+    private val _bookData = MutableLiveData<BookData?>()
+    val bookData: LiveData<BookData?> = _bookData
 
-    private val _loginResponse = MutableLiveData<LoginResponse?>()
-    val loginResponse: LiveData<LoginResponse?> get() = _loginResponse
+    private val _loginResult = MutableLiveData<Result<JwtResponse>>()
+    val loginResult: LiveData<Result<JwtResponse>> = _loginResult
 
 
-    val bookData: LiveData<bookData?> = _bookData
 
     init {
         getBookData()
@@ -82,15 +87,16 @@ class BooksViewModel(private val bookRepo: BookRepo) : ViewModel() {
             }
         }
     }
-    fun login(username: String,password: String){
-        viewModelScope.launch {
-            val response: Response<LoginResponse> = bookRepo.login(username,password)
-            if (response.isSuccessful) {
-                _loginResponse.value = response.body()
-            } else {
-                _loginResponse.value = LoginResponse(sucess = false, token = "")
-            }
 
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            val result = authRepo.login(email, password)
+            if (result.isFailure) {
+                Log.e("BooksViewModel", "Login failed: ${result.exceptionOrNull()?.message}")
+            } else {
+                Log.d("BooksViewModel", "Login successful: ${result.getOrNull()}")
+            }
+            _loginResult.value = result
         }
     }
 
@@ -107,14 +113,16 @@ class BooksViewModel(private val bookRepo: BookRepo) : ViewModel() {
                     ?: throw IllegalStateException("Expected BookDataApplication")
 
                 val bookRepo = application.container.bookDataRepo
-                BooksViewModel(bookRepo)
+                val authRepo = application.container.authRepo
+
+                BooksViewModel(bookRepo,authRepo)
             }
         }
     }
 }
 
 sealed interface BookUiState {
-    data class Success(val Data: List<bookData>) : BookUiState
+    data class Success(val Data: List<BookData>) : BookUiState
     object Error : BookUiState
     object Loading : BookUiState
 }

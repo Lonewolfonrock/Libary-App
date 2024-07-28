@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.lib.R
-import com.example.lib.network.bookData
+import com.example.lib.network.BookData
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -75,10 +75,10 @@ fun HomeScreen(
 
 @Composable
 fun BookData(
-    data: List<bookData>,
+    data: List<BookData>,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    navigateToDetails: (bookData) -> Unit,
+    navigateToDetails: (BookData) -> Unit,
     booksViewModel: BooksViewModel,
     navController: NavController
 ){
@@ -107,9 +107,9 @@ fun BookData(
 
 @Composable
 fun BookCard(
-    data: bookData,
+    data: BookData,
     modifier: Modifier,
-    navigateToDetails: (bookData) -> Unit
+    navigateToDetails: (BookData) -> Unit
 ) {
     Card(
         modifier = modifier

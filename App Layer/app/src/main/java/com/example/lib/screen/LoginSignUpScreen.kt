@@ -2,6 +2,10 @@ package com.example.lib.screen
 
 import BooksViewModel
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -10,7 +14,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,67 +32,76 @@ fun LoginSignUpScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
     booksViewModel: BooksViewModel
-){
-    var username by remember { mutableStateOf(TextFieldValue("")) }
+) {
+    var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
+    val loginResult by booksViewModel.loginResult.observeAsState()
 
-    val  loginResponse by booksViewModel.loginResponse.observeAsState()
+    LaunchedEffect(loginResult) {
+        loginResult?.let {
+            if (it.isSuccess) {
+                navController.navigate("home")
+            } else {
+                // Handle login failure (e.g., show a toast or error message)
+            }
+        }
+    }
 
-    Column(modifier = modifier.padding(16.dp)) {
+    Column(
+        modifier = modifier
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
+        
+        Spacer(modifier = modifier.height(120.dp))
+        
         CustomTextField(
-            FieldData = username,
-            onValueChange = {username = it},
+            FieldData = email,
+            onValueChange = { email = it },
             labelField = "Email address",
-            placeholder ="Enter your e-mail",
-            leadingIcon =Icons.Default.Email
+            placeholder = "Enter your e-mail",
+            leadingIcon = Icons.Default.Email,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
 
         CustomTextField(
             FieldData = password,
-            onValueChange = {password = it},
+            onValueChange = { password = it },
             labelField = "Password",
-            placeholder ="Enter your password",
-            leadingIcon = Icons.Default.Lock
+            placeholder = "Enter your password",
+            leadingIcon = Icons.Default.Lock,
+            modifier = Modifier.padding(bottom = 16.dp)
+
         )
 
-        Button(onClick = { booksViewModel.login(username.text, password.text)}) {
-            Text(text ="Login")
+        Button(
+            onClick = {
+                booksViewModel.login(email.text, password.text)
+            },
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(text = "Login")
         }
-
-        loginResponse?.let { response ->
-            if (response.sucess){
-                LaunchedEffect(Unit){
-                    navController.navigate("home")
-                }
-            }
-            else{
-                Text("Login failed. Please try again", color = androidx.compose.ui.graphics.Color.Red)
-            }
-
-        }
-
-
-
 
     }
-
 }
 
 @Composable
 fun CustomTextField(
-    FieldData:TextFieldValue,
-    onValueChange:(TextFieldValue)->Unit,
-    labelField:String,
-    placeholder:String,
-    leadingIcon:ImageVector
+    FieldData: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    labelField: String,
+    placeholder: String,
+    leadingIcon: ImageVector,
+    modifier: Modifier = Modifier
 ) {
-    return OutlinedTextField(
+    OutlinedTextField(
         value = FieldData,
         leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = labelField) },
-        //trailingIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = null) },
         onValueChange = onValueChange,
         label = { Text(text = labelField) },
         placeholder = { Text(text = placeholder) },
-        modifier = Modifier.padding(bottom = 16.dp)
+        modifier = modifier
+            .fillMaxWidth()
     )
 }

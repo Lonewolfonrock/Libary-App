@@ -1,6 +1,6 @@
 package com.example.lib.network
 
-data class bookData (
+data class BookData (
     var bookID: Int,
     var bookName: String,
     var bookDescription: String,
