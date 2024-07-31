@@ -1,13 +1,15 @@
 package com.example.lib.screen
 
 import BooksViewModel
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -32,12 +35,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.compose.backgroundDark
 
 @Composable
 fun LoginSignUpScreen(
@@ -49,6 +54,7 @@ fun LoginSignUpScreen(
     var password by remember { mutableStateOf(TextFieldValue("")) }
     val loginResult by booksViewModel.loginResult.observeAsState()
     var showError by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     LaunchedEffect(loginResult) {
         loginResult?.let {
@@ -106,8 +112,9 @@ fun LoginSignUpScreen(
                 .fillMaxWidth()
                 .align(alignment = Alignment.CenterHorizontally)
         ) {
-            Text(text = "Login")
+            Text(text = "Login to Account")
         }
+
 
 
         AnimatedVisibility(
@@ -125,8 +132,27 @@ fun LoginSignUpScreen(
                 )
             }
 
+        Button(
+            onClick = {
+                var linkeinUrl ="https://www.linkedin.com/in/anjesh-mainali-218070284/"
+                val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(linkeinUrl))
+                context.startActivity(intent)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+
+        ) {
+            Text(text = "Follow on LinkedIn")
+        }
+
+
+
+
 
         ClickableText()
+
+
         
         
         
@@ -164,7 +190,7 @@ fun ClickableText(){
     var click by remember { mutableStateOf(false) }
 
     Text(
-        text = "Don,t have account !! Click me",
+        text = "Don,t have account? !! Click me",
         color = Color(0, 0, 100),
         fontWeight = FontWeight.Bold,
         textDecoration = TextDecoration.Underline,
