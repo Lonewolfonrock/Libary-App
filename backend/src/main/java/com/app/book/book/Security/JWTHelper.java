@@ -53,7 +53,7 @@ public class JWTHelper {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000 * 60))
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }
